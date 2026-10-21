@@ -396,20 +396,24 @@ a {
   padding: 32px 24px;
   background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
 }
-.game-card-img {
+/* Specificity must beat .game-card (later in this file) or its background
+   shorthand and min-height:160px win and the photo never shows. */
+.game-card.game-card-img {
   position: relative;
   background-size: cover;
   background-position: center;
-  min-height: 200px;
+  background-repeat: no-repeat;
+  min-height: 220px;
   overflow: hidden;
+  padding: 0;
 }
+/* Absolute inset:0 so the gradient scrim covers the entire card, including
+   where .game-card would otherwise apply its padding. */
 .game-card-overlay {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
-  padding: 20px 16px;
-  width: 100%;
-  height: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.85) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -633,6 +637,7 @@ a {
 
 /* ---------- Flashcard ---------- */
 .flashcard-container {
+  width: 100%;
   perspective: 1000px;
   margin: 24px auto;
   max-width: 400px;
@@ -768,7 +773,7 @@ a {
 }
 
 .game-card {
-  background: var(--surface);
+  background-color: var(--surface);
   border: 2px solid var(--surface2);
   border-radius: var(--radius);
   padding: 28px 20px;
@@ -872,6 +877,7 @@ a {
 
 /* ---------- Memory Grid ---------- */
 .memory-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -2229,6 +2235,17 @@ body::after {
 
 /* Make sure actual content sits above the vignette */
 body > * { position: relative; z-index: 1; }
+
+/* GPU-cheap animated background (js/background.js). Decoration only, so it sits
+   under the vignette and never takes pointer events. */
+#vf-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
 
 /* --- Glassmorphism pass on cards & surfaces --- */
 .card, .modal, .stat-card.analytics-stat, .chart-card,

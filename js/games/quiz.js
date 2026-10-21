@@ -119,7 +119,7 @@
     h += '  <span id="qzScore" style="font-weight:700;color:var(--success);">' + _score + '</span>';
     h += '  <span style="font-size:0.8rem;color:var(--text-muted);"> &middot; XP: </span>';
     h += '  <span id="qzXP" style="font-weight:700;color:var(--accent);">+' + _xpEarned + '</span></div>';
-    _container.innerHTML = html;
+    _container.innerHTML = h;
     bindOptionClicks();
 
     // Speak the word for this question

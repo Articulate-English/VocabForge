@@ -293,6 +293,7 @@ var VF = {
     this.bindNav();
     this.bindSettings();
     this.applyTheme();
+    this.mountBackground();
     this.renderStats();
     this.updateHeader();
     this.showScreen(this.screen);
@@ -845,7 +846,15 @@ var VF = {
       btn.textContent = this.themes[this._themeIndex].label;
     }
     this.applyGlow();
+    if (window.VFBackground) window.VFBackground.refreshColors();
     this.save();
+  },
+
+  /* Mount the animated background once on init */
+  mountBackground: function() {
+    var canvas = document.getElementById('vf-bg');
+    if (!canvas || typeof window.VFBackground === 'undefined') return;
+    window.VFBackground.mount(canvas);
   },
 
   /* Apply glow/outline/intensity from settings to CSS variables */
